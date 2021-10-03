@@ -46,7 +46,7 @@ jobs:
             make test
 
       - store_test_results:
-          path: test-results
+          path: test_results
         
       # run lints!
       - run:
