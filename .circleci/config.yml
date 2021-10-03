@@ -44,6 +44,10 @@ jobs:
           command: |
             . venv/bin/activate
             make test
+
+      - store_test_results:
+        path: test-results
+        
       # run lints!
       - run:
           name: run lint
