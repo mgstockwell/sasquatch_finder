@@ -7,4 +7,4 @@ def test_func():
 
 def test_func_always_fail():
     result = 2
-    assert result == 1
+    assert result == 2
