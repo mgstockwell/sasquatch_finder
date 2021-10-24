@@ -39,7 +39,7 @@ def query_bfro():
         concat('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a>') link
         FROM
         `msd8654-434.bfro.bf_centroids_sample_vv`
-        WHERE latitude is not null and rnk <10
+        WHERE latitude is not null and rnk <50
         """
     )
 
