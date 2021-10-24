@@ -10,3 +10,4 @@ requests
 google-cloud-storage
 datadotworld 
 folium
+gunicorn
