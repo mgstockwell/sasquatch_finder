@@ -13,6 +13,7 @@ if os.getenv('GAE_ENV', '').startswith('standard'):
   client = bigquery.Client()
 else:
   # Local execution.
+    key_path = "c:\\tmp\\msd8654-434-c23b2877795f.json"
     credentials = service_account.Credentials.from_service_account_file(
         key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
     )
