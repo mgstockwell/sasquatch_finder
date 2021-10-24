@@ -1,20 +1,23 @@
 # [START gae_python3_app]
 from flask import Flask
+import os
 import json
 import datetime
 import folium
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-# TODO(developer): Set key_path to the path to the service account key
-#                  file.
-key_path = "c:\\tmp\\msd8654-434-c23b2877795f.json"
+# logon and get credentials.
+if os.getenv('GAE_ENV', '').startswith('standard'):
+  # Production in the standard environment
+  client = bigquery.Client()
+else:
+  # Local execution.
+    credentials = service_account.Credentials.from_service_account_file(
+        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    )
+    client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
 
-credentials = service_account.Credentials.from_service_account_file(
-    key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
-)
-
-client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
 # Get data from BQ
 
 def query_bfro():
