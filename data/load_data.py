@@ -5,7 +5,7 @@ import json
 
 # documentation: https://docs.data.world/en/59261-59632-1--Python-SDK.html
 bfro_dataset = dw.load_dataset('timothyrenner/bfro-sightings-data')
-print(json.dump(bfro_dataset.describe(), indent=4)
+print(json.dumps(bfro_dataset.describe(), indent=4))
 
 
 # https://www.thecodebuzz.com/python-upload-files-download-files-google-cloud-storage/
