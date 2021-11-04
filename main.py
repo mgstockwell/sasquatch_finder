@@ -26,20 +26,28 @@ def query_bfro():
     query_job = client.query(
         """
         SELECT
-        CENTROID_ID,
-        CENTROID_COLOR,
+        CENTROID_ID_GEO,
+        CENTROID_COLOR_GEO,
+        CENTROID_ID_CLIMATE,
+        CENTROID_COLOR_CLIMATE,
+        CENTROID_ID_GEO_CLIMATE,
+        CENTROID_COLOR_GEO_CLIMATE,
         county,
         state,
         season,
         latitude,
         longitude,
+        elevation,
         date,
         number,
-        temperature_mid, 
-        concat('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a>') link
+        terrain_type, climate_type,
+        CONCAT('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a><br>h:',
+        hardiness_zone_code,'<br>elv:',elevation,'<br>type:',climate_type,terrain_type) link
         FROM
         `msd8654-434.bfro.bf_centroids_sample_vv`
-        WHERE latitude is not null and rnk <50
+        WHERE
+        latitude IS NOT NULL
+        AND partition_rnk <100
         """
     )
 
@@ -72,11 +80,44 @@ def index():
         folium.Marker(
         location=[row.latitude, row.longitude],
         popup=row.link,
-        icon=folium.Icon(color=row.CENTROID_COLOR)
+        icon=folium.Icon(color=row.CENTROID_COLOR_GEO)
     ).add_to(folium_map)
 
     return folium_map._repr_html_()
 
+@app.route('/map2')
+def index2():
+    start_coords = (36.00, -95.00)
+    folium_map = folium.Map(location=start_coords, zoom_start=5)
+    # icon = folium.features.CustomIcon('https://icon-library.com/2993760.html', icon_size=(24, 24))
+
+    # add markers for each sighting
+    
+    for row in query_bfro():
+        folium.Marker(
+        location=[row.latitude, row.longitude],
+        popup=row.link,
+        icon=folium.Icon(color=row.CENTROID_COLOR_CLIMATE)
+    ).add_to(folium_map)
+
+    return folium_map._repr_html_()
+
+@app.route('/map3')
+def index3():
+    start_coords = (36.00, -95.00)
+    folium_map = folium.Map(location=start_coords, zoom_start=5)
+    # icon = folium.features.CustomIcon('https://icon-library.com/2993760.html', icon_size=(24, 24))
+
+    # add markers for each sighting
+    
+    for row in query_bfro():
+        folium.Marker(
+        location=[row.latitude, row.longitude],
+        popup=row.link,
+        icon=folium.Icon(color=row.CENTROID_COLOR_GEO_CLIMATE)
+    ).add_to(folium_map)
+
+    return folium_map._repr_html_()
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
