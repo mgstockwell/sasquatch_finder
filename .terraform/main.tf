@@ -13,7 +13,7 @@ provider "google" {
 }
 
 resource "google_storage_bucket" "msd8654-434-bfro-dev314" {
-  name          = "bfro_data"
+  name          = "msd8654-434-bfro-dev314"
   location      = "US"
   force_destroy = true
 
