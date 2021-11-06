@@ -12,7 +12,7 @@ provider "google" {
   project     = "msd8654-434-bfro-dev"
 }
 
-resource "google_storage_bucket" "msd8654-434-bfro-dev" {
+resource "google_storage_bucket" "msd8654-434-bfro-dev314" {
   name          = "bfro_data"
   location      = "US"
   force_destroy = true
