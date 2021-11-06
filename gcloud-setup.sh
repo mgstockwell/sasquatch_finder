@@ -1,4 +1,4 @@
-export $GOOGLE_CLOUD_PROJECT=$GOOGLE_CLOUD_PROJECT
+export $GOOGLE_CLOUD_PROJECT=msd8654-434-bfro-dev
 export GOOGLE_BILLING_ACCT=01278E-34A2F6-83795E
 gcloud info
 gcloud projects create $GOOGLE_CLOUD_PROJECT --labels=env=dev
