@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE TABLE `msd8654-434.bfro.asdf`
+CREATE OR REPLACE TABLE `bfro.asdf`
 (
   observed STRING,
   location_details STRING,
@@ -30,8 +30,8 @@ CREATE OR REPLACE TABLE `msd8654-434.bfro.asdf`
   wind_bearing INT64,
   wind_speed FLOAT64
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.bf_centroids`
+;
+CREATE OR REPLACE TABLE `bfro.bf_centroids`
 (
   observed STRING,
   location_details STRING,
@@ -79,8 +79,8 @@ CREATE OR REPLACE TABLE `msd8654-434.bfro.bf_centroids`
   CENTROID_ID_GEO_CLIMATE INT64,
   CENTROID_COLOR_GEO_CLIMATE STRING
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.bfro_reports_geocoded`
+;
+CREATE OR REPLACE TABLE `bfro.bfro_reports_geocoded`
 (
   observed STRING,
   location_details STRING,
@@ -112,13 +112,13 @@ CREATE OR REPLACE TABLE `msd8654-434.bfro.bfro_reports_geocoded`
   wind_speed FLOAT64,
   location STRING
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.climdiv-pcpncy`
+;
+CREATE OR REPLACE TABLE `bfro.climdiv-pcpncy`
 (
   string_field_0 STRING
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.bfro_reports_geocoded_dataprep`
+;
+CREATE OR REPLACE TABLE `bfro.bfro_reports_geocoded_dataprep`
 (
   ctrl_load_date DATETIME,
   observed STRING,
@@ -151,8 +151,8 @@ CREATE OR REPLACE TABLE `msd8654-434.bfro.bfro_reports_geocoded_dataprep`
   wind_speed STRING,
   location STRING
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.bfro_reports_geocoded_final`
+;
+CREATE OR REPLACE TABLE `bfro.bfro_reports_geocoded_final`
 (
   observed STRING,
   location_details STRING,
@@ -194,8 +194,8 @@ CREATE OR REPLACE TABLE `msd8654-434.bfro.bfro_reports_geocoded_final`
   terrain_type STRING,
   climate_type STRING
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.hardiness_zones`
+;
+CREATE OR REPLACE TABLE `bfro.hardiness_zones`
 (
   zip_code INT64,
   zone STRING,
@@ -204,12 +204,12 @@ CREATE OR REPLACE TABLE `msd8654-434.bfro.hardiness_zones`
   latitude FLOAT64,
   longitude FLOAT64
 )
-
-CREATE OR REPLACE TABLE `msd8654-434.bfro.elevations`
+;
+CREATE OR REPLACE TABLE `bfro.elevations`
 (
   number INT64,
   lat FLOAT64,
   long FLOAT64,
   elevation INT64
 )
-
+;
