@@ -1,0 +1,142 @@
+[m[1mNAME[m
+    gcloud cheat-sheet - display gcloud cheat sheet
+
+[m[1mSYNOPSIS[m
+    [1mgcloud cheat-sheet[m [[4mGCLOUD_WIDE_FLAG ...[m]
+
+[m[1mDESCRIPTION[m
+    A roster of go-to [1mgcloud[m commands for the gcloud tool, Google Cloud's
+    primary command-line tool.
+
+[m  [1mGetting started[m
+    Get going with the [1mgcloud[m command-line tool
+
+      ▪ [1mgcloud init[m: Initialize, authorize, and configure the [1mgcloud[m tool.
+      ▪ [1mgcloud version[m: Display version and installed components.
+      ▪ [1mgcloud components install[m: Install specific components.
+      ▪ [1mgcloud components update[m: Update your Cloud SDK to the latest
+        version.
+      ▪ [1mgcloud config set[m [1mproject[m: Set a default Google Cloud project to work
+        on.
+      ▪ [1mgcloud info[m: Display current [1mgcloud[m tool environment details.
+
+[m  [1mHelp[m
+    Cloud SDK is happy to help
+
+      ▪ [1mgcloud help[m: Search the [1mgcloud[m tool reference documents for specific
+        terms.
+      ▪ [1mgcloud feedback[m: Provide feedback for the Cloud SDK team.
+      ▪ [1mgcloud topic[m: Supplementary help material for non-command topics like
+        accessibility, filtering, and formatting.
+
+[m  [1mPersonalization[m
+    Make the Cloud SDK your own; personalize your configuration with properties
+
+      ▪ [1mgcloud config set[m: Define a property (like compute/zone) for the
+        current configuration.
+      ▪ [1mgcloud config get-value[m: Fetch value of a Cloud SDK property.
+      ▪ [1mgcloud config list[m: Display all the properties for the current
+        configuration.
+      ▪ [1mgcloud config configurations create[m: Create a new named
+        configuration.
+      ▪ [1mgcloud config configurations list[m: Display a list of all available
+        configurations.
+      ▪ [1mgcloud config configurations activate[m: Switch to an existing named
+        configuration.
+
+[m  [1mCredentials[m
+    Grant and revoke authorization to Cloud SDK
+
+      ▪ [1mgcloud auth login[m: Authorize Google Cloud access for the [1mgcloud[m tool
+        with Google user credentials and set current account as active.
+      ▪ [1mgcloud auth activate-service-account[m: Like [1mgcloud auth login[m but with
+        service account credentials.
+      ▪ [1mgcloud auth list[m: List all credentialed accounts.
+      ▪ [1mgcloud auth print-access-token[m: Display the current account's access
+        token.
+      ▪ [1mgcloud auth revoke[m: Remove access credentials for an account.
+
+[m  [1mProjects[m
+    Manage project access policies
+
+      ▪ [1mgcloud projects describe[m: Display metadata for a project (including
+        its ID).
+      ▪ [1mgcloud projects add-iam-policy-binding[m: Add an IAM policy binding to
+        a specified project.
+
+[m  [1mIdentity & Access Management[m
+    Configuring Cloud Identity & Access Management (IAM) preferences and
+    service accounts
+
+      ▪ [1mgcloud iam list-grantable-roles[m: List IAM grantable roles for a
+        resource.
+      ▪ [1mgcloud iam roles create[m: Create a custom role for a project or org.
+      ▪ [1mgcloud iam service-accounts create[m: Create a service account for a
+        project.
+      ▪ [1mgcloud iam service-accounts add-iam-policy-binding[m: Add an IAM policy
+        binding to a service account.
+      ▪ [1mgcloud iam service-accounts set-iam-policy[m: Replace existing IAM
+        policy binding.
+      ▪ [1mgcloud iam service-accounts keys list[m: List a service account's keys.
+
+[m  [1mDocker & Google Kubernetes Engine (GKE)[m
+    Manage containerized applications on Kubernetes
+
+      ▪ [1mgcloud auth configure-docker[m: Register the [1mgcloud[m tool as a Docker
+        credential helper.
+      ▪ [1mgcloud container clusters create[m: Create a cluster to run GKE
+        containers.
+      ▪ [1mgcloud container clusters list[m: List clusters for running GKE
+        containers.
+      ▪ [1mgcloud container clusters get-credentials[m: Update [1mkubeconfig[m to get
+        [1mkubectl[m to use a GKE cluster.
+      ▪ [1mgcloud container images list-tags[m: List tag and digest metadata for a
+        container image.
+
+[m  [1mVirtual Machines & Compute Engine[m
+    Create, run, and manage VMs on Google infrastructure
+
+      ▪ [1mgcloud compute zones list[m: List Compute Engine zones.
+      ▪ [1mgcloud compute instances describe[m: Display a VM instance's details.
+      ▪ [1mgcloud compute instances list[m: List all VM instances in a project.
+      ▪ [1mgcloud compute disks snapshot[m: Create snapshot of persistent disks.
+      ▪ [1mgcloud compute snapshots describe[m: Display a snapshot's details.
+      ▪ [1mgcloud compute snapshots delete[m: Delete a snapshot.
+      ▪ [1mgcloud compute ssh[m: Connect to a VM instance by using SSH.
+
+[m  [1mServerless & App Engine[m
+    Build highly scalable applications on a fully managed serverless platform
+
+      ▪ [1mgcloud app deploy[m: Deploy your app's code and configuration to the
+        App Engine server.
+      ▪ [1mgcloud app versions list[m: List all versions of all services deployed
+        to the App Engine server.
+      ▪ [1mgcloud app browse[m: Open the current app in a web browser.
+      ▪ [1mgcloud app create[m: Create an App Engine app within your current
+        project.
+      ▪ [1mgcloud app logs read[m: Display the latest App Engine app logs.
+
+[m  [1mMiscellaneous[m
+    Commands that might come in handy
+
+      ▪ [1mgcloud kms decrypt[m: Decrypt ciphertext (to a plaintext file) using a
+        Cloud Key Management Service (Cloud KMS) key.
+      ▪ [1mgcloud logging logs list[m: List your project's logs.
+      ▪ [1mgcloud sql backups describe[m: Display info about a Cloud SQL instance
+        backup.
+      ▪ [1mgcloud sql export sql[m: Export data from a Cloud SQL instance to a SQL
+        file.
+
+[m[1mEXAMPLES[m
+    To view this cheat sheet, run:
+
+        $ gcloud cheat-sheet
+
+[m[1mGCLOUD WIDE FLAGS[m
+    These flags are available to all commands: --account, --billing-project,
+    --configuration, --flags-file, --flatten, --format, --help,
+    --impersonate-service-account, --log-http, --project, --quiet,
+    --trace-token, --user-output-enabled, --verbosity.
+
+    Run [1m$ gcloud help[m for details.
+[m

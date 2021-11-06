@@ -103,3 +103,6 @@ ENV/
 
 # windows crap
 desktop.ini
+
+# keys
+*key.json
