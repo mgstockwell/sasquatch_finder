@@ -1,215 +1,35 @@
-
-CREATE OR REPLACE TABLE `bfro.asdf`
-(
-  observed STRING,
-  location_details STRING,
-  county STRING,
-  state STRING,
-  season STRING,
-  title STRING,
-  latitude FLOAT64,
-  longitude FLOAT64,
-  date DATE,
-  number FLOAT64,
-  classification STRING,
-  geohash STRING,
-  temperature_high FLOAT64,
-  temperature_mid FLOAT64,
-  temperature_low FLOAT64,
-  dew_point FLOAT64,
-  humidity FLOAT64,
-  cloud_cover FLOAT64,
-  moon_phase FLOAT64,
-  precip_intensity FLOAT64,
-  precip_probability FLOAT64,
-  precip_type STRING,
-  pressure FLOAT64,
-  summary STRING,
-  uv_index INT64,
-  visibility FLOAT64,
-  wind_bearing INT64,
-  wind_speed FLOAT64
-)
-;
-CREATE OR REPLACE TABLE `bfro.bf_centroids`
-(
-  observed STRING,
-  location_details STRING,
-  county STRING,
-  state STRING,
-  season STRING,
-  title STRING,
-  latitude FLOAT64,
-  longitude FLOAT64,
-  date DATE,
-  number FLOAT64,
-  classification STRING,
-  geohash STRING,
-  temperature_high FLOAT64,
-  temperature_mid FLOAT64,
-  temperature_low FLOAT64,
-  dew_point FLOAT64,
-  humidity FLOAT64,
-  cloud_cover FLOAT64,
-  moon_phase FLOAT64,
-  precip_intensity FLOAT64,
-  precip_probability FLOAT64,
-  precip_type STRING,
-  pressure FLOAT64,
-  summary STRING,
-  uv_index INT64,
-  visibility FLOAT64,
-  wind_bearing INT64,
-  wind_speed FLOAT64,
-  location STRING,
-  zip_code STRING,
-  area_land_meters FLOAT64,
-  population INT64,
-  pop_density_sqkm FLOAT64,
-  zip_county STRING,
-  hardiness_zone_code STRING,
-  hardiness_zone_num STRING,
-  elevation INT64,
-  terrain_type STRING,
-  climate_type STRING,
-  CENTROID_ID_GEO INT64,
-  CENTROID_COLOR_GEO STRING,
-  CENTROID_ID_CLIMATE INT64,
-  CENTROID_COLOR_CLIMATE STRING,
-  CENTROID_ID_GEO_CLIMATE INT64,
-  CENTROID_COLOR_GEO_CLIMATE STRING
-)
-;
-CREATE OR REPLACE TABLE `bfro.bfro_reports_geocoded`
-(
-  observed STRING,
-  location_details STRING,
-  county STRING,
-  state STRING,
-  season STRING,
-  title STRING,
-  latitude FLOAT64,
-  longitude FLOAT64,
-  date DATE,
-  number FLOAT64,
-  classification STRING,
-  geohash STRING,
-  temperature_high FLOAT64,
-  temperature_mid FLOAT64,
-  temperature_low FLOAT64,
-  dew_point FLOAT64,
-  humidity FLOAT64,
-  cloud_cover FLOAT64,
-  moon_phase FLOAT64,
-  precip_intensity FLOAT64,
-  precip_probability FLOAT64,
-  precip_type STRING,
-  pressure FLOAT64,
-  summary STRING,
-  uv_index INT64,
-  visibility FLOAT64,
-  wind_bearing INT64,
-  wind_speed FLOAT64,
-  location STRING
-)
-;
-CREATE OR REPLACE TABLE `bfro.climdiv-pcpncy`
-(
-  string_field_0 STRING
-)
-;
-CREATE OR REPLACE TABLE `bfro.bfro_reports_geocoded_dataprep`
-(
-  ctrl_load_date DATETIME,
-  observed STRING,
-  location_details STRING,
-  county STRING,
-  state STRING,
-  season STRING,
-  title STRING,
-  latitude STRING,
-  longitude STRING,
-  date DATE,
-  number FLOAT64,
-  classification STRING,
-  geohash STRING,
-  temperature_high STRING,
-  temperature_mid STRING,
-  temperature_low STRING,
-  dew_point STRING,
-  humidity STRING,
-  cloud_cover STRING,
-  moon_phase STRING,
-  precip_intensity STRING,
-  precip_probability INT64,
-  precip_type STRING,
-  pressure STRING,
-  summary STRING,
-  uv_index INT64,
-  visibility STRING,
-  wind_bearing INT64,
-  wind_speed STRING,
-  location STRING
-)
-;
-CREATE OR REPLACE TABLE `bfro.bfro_reports_geocoded_final`
-(
-  observed STRING,
-  location_details STRING,
-  county STRING,
-  state STRING,
-  season STRING,
-  title STRING,
-  latitude FLOAT64,
-  longitude FLOAT64,
-  date DATE,
-  number FLOAT64,
-  classification STRING,
-  geohash STRING,
-  temperature_high FLOAT64,
-  temperature_mid FLOAT64,
-  temperature_low FLOAT64,
-  dew_point FLOAT64,
-  humidity FLOAT64,
-  cloud_cover FLOAT64,
-  moon_phase FLOAT64,
-  precip_intensity FLOAT64,
-  precip_probability FLOAT64,
-  precip_type STRING,
-  pressure FLOAT64,
-  summary STRING,
-  uv_index INT64,
-  visibility FLOAT64,
-  wind_bearing INT64,
-  wind_speed FLOAT64,
-  location STRING,
-  zip_code STRING,
-  area_land_meters FLOAT64,
-  population INT64,
-  pop_density_sqkm FLOAT64,
-  zip_county STRING,
-  hardiness_zone_code STRING,
-  hardiness_zone_num STRING,
-  elevation INT64,
-  terrain_type STRING,
-  climate_type STRING
-)
-;
-CREATE OR REPLACE TABLE `bfro.hardiness_zones`
-(
-  zip_code INT64,
-  zone STRING,
-  city STRING,
-  state STRING,
-  latitude FLOAT64,
-  longitude FLOAT64
-)
-;
-CREATE OR REPLACE TABLE `bfro.elevations`
-(
-  number INT64,
-  lat FLOAT64,
-  long FLOAT64,
-  elevation INT64
-)
-;
+CREATE OR REPLACE VIEW
+  `bfro.precip_by_county_vv` AS
+SELECT
+  /* https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt */
+  #STATE-CODE          1-2      STATE-CODE as indicated in State Code Table as
+  #                             described in FILE 1.  Range of values is 01-48.
+  SUBSTR(string_field_0, 1,2) AS state_code,
+  #DIVISION-NUMBER     3-5      COUNTY FIPS - Range of values 001-999.
+  SUBSTR(string_field_0, 3,3) AS county_fips,
+  #ELEMENT CODE        6-7      01 = Precipitation
+  #                             02 = Average Temperature
+  #                             27 = Maximum Temperature
+  #                             28 = Minimum Temperature
+  SUBSTR(string_field_0, 6,2) AS element_code,
+  #YEAR                8-11     This is the year of record.  Range is 1895 to
+  #current year processed.
+  SUBSTR(string_field_0, 8,4) AS year,
+  #Monthly Divisional Temperature format (f7.2)
+  #Range of values -50.00 to 140.00 degrees Fahrenheit.
+  #Decimals retain a position in the 7-character
+  #field.  Missing values in the latest year are
+  #indicated by -99.99. (all data values are right justified):
+  CAST(SUBSTR(string_field_0, 19, 6) AS FLOAT64) AS feb_value,
+  CAST(SUBSTR(string_field_0, 26, 6) AS FLOAT64) AS mar_value,
+  CAST(SUBSTR(string_field_0, 33, 6) AS FLOAT64) AS apr_value,
+  CAST(SUBSTR(string_field_0, 40, 6) AS FLOAT64) AS may_value,
+  CAST(SUBSTR(string_field_0, 47, 6) AS FLOAT64) AS june_value,
+  CAST(SUBSTR(string_field_0, 54, 6) AS FLOAT64) AS july_value,
+  CAST(SUBSTR(string_field_0, 61, 6) AS FLOAT64) AS aug_value,
+  CAST(SUBSTR(string_field_0, 68, 6) AS FLOAT64) AS sept_value,
+  CAST(SUBSTR(string_field_0, 75, 6) AS FLOAT64) AS oct_value,
+  CAST(SUBSTR(string_field_0, 82, 6) AS FLOAT64) AS nov_value,
+  CAST(SUBSTR(string_field_0, 89, 6) AS FLOAT64) AS dec_value
+FROM
+  `msd8654-434.bfro.climdiv-pcpncy` ;
