@@ -37,7 +37,7 @@ def query_bfro():
         date,
         number,
         CONCAT('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a><br>phz:',
-        hardiness_zone_code,'<br>elv:',elevation) link
+        hardiness_zone_code,'<br>elv:',elevation,'<br>typ:',CENTROID_ID) link
         FROM
         `bfro.bf_centroids_sample_vv`
         WHERE
