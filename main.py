@@ -36,9 +36,8 @@ def query_bfro():
         elevation,
         date,
         number,
-        terrain_type, climate_type,
-        CONCAT('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a><br>h:',
-        hardiness_zone_code,'<br>elv:',elevation,'<br>type:',climate_type,terrain_type) link
+        CONCAT('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a><br>phz:',
+        hardiness_zone_code,'<br>elv:',elevation) link
         FROM
         `bfro.bf_centroids_sample_vv`
         WHERE
@@ -76,7 +75,7 @@ def index():
         folium.Marker(
         location=[row.latitude, row.longitude],
         popup=row.link,
-        icon=folium.Icon(color=row.CENTROID_COLOR_GEO)
+        icon=folium.Icon(color=row.CENTROID_COLOR)
     ).add_to(folium_map)
 
     return folium_map._repr_html_()
