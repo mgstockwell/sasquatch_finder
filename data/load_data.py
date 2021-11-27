@@ -1,5 +1,7 @@
+#!/usr/bin/env python
 from google.cloud import storage
 import datadotworld as dw
+import requests
 import json
 from google.cloud import bigquery
 import urllib.request
@@ -11,11 +13,7 @@ import os
 # powershell:
 # $env:GOOGLE_APPLICATION_CREDENTIALS="<path>/<filename>.json"
 
-# documentation: https://docs.data.world/en/59261-59632-1--Python-SDK.html
-bfro_dataset = dw.load_dataset('timothyrenner/bfro-sightings-data')
-print(json.dumps(bfro_dataset.describe(), indent=4))
-csv_file = bfro_dataset.rawdata()
-
+# function to upload a csv to GCP storage bucket
 # https://www.thecodebuzz.com/python-upload-files-download-files-google-cloud-storage/
 def upload_blob(bucket_name, source_file_name, destination_blob_name):
     """Uploads a file to the google storage bucket."""
@@ -57,17 +55,47 @@ def load_bq_table(file_name, table_id, skip_rows=1):
         )
     )
 
-# load dataset to storage bucket
+# load Bigfoot geocoded dataset to storage bucket
+# documentation: https://docs.data.world/en/59261-59632-1--Python-SDK.html
+# documentation: https://docs.data.world/en/59261-59632-1--Python-SDK.html
+bfro_dataset = dw.load_dataset('timothyrenner/bfro-sightings-data')
+print(json.dumps(bfro_dataset.describe(), indent=4))
 df = bfro_dataset.dataframes.get("bfro_reports_geocoded")
-upload_blob('bfro_data', df.to_csv(index=False) ,
-            'bfro_reports_geocoded.csv')
+csv = df.to_csv('bfro_reports_geocoded.csv', index=False)
+upload_blob('bfro_data', 'bfro_reports_geocoded.csv' ,'bfro_reports_geocoded.csv')
 
-# climate data by county, see https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt
-# note the source file is position delimited, will appear as one column
+# load zipcode data to storage bucket
+zipcode_dataset = dw.load_dataset('bryon/us-zipcodes')
+print(json.dumps(zipcode_dataset.describe(), indent=4))
+df = zipcode_dataset.dataframes.get("zipcode")
+csv = df.to_csv('us-zipcodes.csv', index=False, )
+upload_blob('bfro_data', 'us-zipcodes.csv', 'us-zipcodes.csv')
+
+# load climate data by county, see https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt
+# note the source file is position delimited, will appear as one column, will correct in a view
 # TODO: data on climate changes monthly, need to get filename dynamically
 table_id = "bfro.climdiv-pcpncy"
 source_url = "https://www.ncei.noaa.gov/pub/data/cirs/climdiv/climdiv-pcpncy-v1.0.0-20211104"
 file_name = "climdiv-pcpncy"
-
 urllib.request.urlretrieve(source_url, file_name)
 load_bq_table(file_name,table_id,skip_rows=0)
+
+# load plant hardiness zones
+# json data available here: https://phzmapi.org/
+# discussion here: https://opendata.stackexchange.com/questions/1884/usda-plant-hardiness-zone-map-phzm-data
+f = open("plant_hardiness_zones.csv", 'w')
+f.write("zipcode,json"+ "\n")
+for line in open('us-zipcodes.csv'):
+  zipcode = str(line.split(",")[0])
+  if zipcode=="00801": break
+  url = "https://phzmapi.org/" + zipcode + ".json"
+  payload={}
+  headers = {}
+  response = requests.request("GET", url, headers=headers, data=payload)
+  print(zipcode,response.text) 
+  if (response.text.find("<Error>")>0):
+    print(zipcode,"doesn't exist")
+  else:
+    f.writelines(zipcode + "," + response.text + "\n")
+    print(zipcode, ",", response.text)
+f.close()

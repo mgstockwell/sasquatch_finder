@@ -26,12 +26,8 @@ def query_bfro():
     query_job = client.query(
         """
         SELECT
-        CENTROID_ID_GEO,
-        CENTROID_COLOR_GEO,
-        CENTROID_ID_CLIMATE,
-        CENTROID_COLOR_CLIMATE,
-        CENTROID_ID_GEO_CLIMATE,
-        CENTROID_COLOR_GEO_CLIMATE,
+        CENTROID_ID,
+        CENTROID_COLOR,
         county,
         state,
         season,
@@ -44,7 +40,7 @@ def query_bfro():
         CONCAT('<a href="https://www.bfro.net/gdb/show_report.asp?id=', number,'">BFRO report</a><br>h:',
         hardiness_zone_code,'<br>elv:',elevation,'<br>type:',climate_type,terrain_type) link
         FROM
-        `msd8654-434.bfro.bf_centroids_sample_vv`
+        `bfro.bf_centroids_sample_vv`
         WHERE
         latitude IS NOT NULL
         AND partition_rnk <100
