@@ -5,7 +5,7 @@ SELECT
   #                             described in FILE 1.  Range of values is 01-48.
   SUBSTR(string_field_0, 1,2) AS state_code,
   #DIVISION-NUMBER     3-5      COUNTY FIPS - Range of values 001-999.
-  SUBSTR(string_field_0, 3,3) AS county_fips,
+  SUBSTR(string_field_0, 1,3) AS county_fips,
   #ELEMENT CODE        6-7      01 = Precipitation
   #                             02 = Average Temperature
   #                             27 = Maximum Temperature
