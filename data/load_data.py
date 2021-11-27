@@ -6,6 +6,7 @@ import json
 from google.cloud import bigquery
 import urllib.request
 import os
+import pandas as pd
 
 # if running locally will need app credentials 
 # terminal
