@@ -32,3 +32,10 @@ SELECT
   CAST(SUBSTR(string_field_0, 89, 6) AS FLOAT64) AS dec_value
 FROM
   `bfro.climdiv-pcpncy`;
+  
+CREATE OR REPLACE EXTERNAL TABLE bfro.bfro_reports_geocoded_csv
+OPTIONS (
+  format = 'CSV',
+  uris = ['gs://bfro_data/bfro_reports_geocoded.csv']
+)
+;
