@@ -42,7 +42,6 @@ def query_bfro():
         `bfro.bf_centroids_sample_vv`
         WHERE
         latitude IS NOT NULL
-        AND partition_rnk <100
         """
     )
 
