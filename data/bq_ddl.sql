@@ -1,3 +1,4 @@
+CREATE OR REPLACE VIEW bfro.precip_by_county_vv AS
 SELECT
   /* https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt */
   #STATE-CODE          1-2      STATE-CODE as indicated in State Code Table as
