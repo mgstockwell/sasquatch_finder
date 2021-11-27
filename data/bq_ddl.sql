@@ -1,5 +1,3 @@
-CREATE OR REPLACE VIEW
-  `bfro.precip_by_county_vv` AS
 SELECT
   /* https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt */
   #STATE-CODE          1-2      STATE-CODE as indicated in State Code Table as
@@ -20,6 +18,7 @@ SELECT
   #Decimals retain a position in the 7-character
   #field.  Missing values in the latest year are
   #indicated by -99.99. (all data values are right justified):
+  CAST(SUBSTR(string_field_0, 12, 6) AS FLOAT64) AS jan_value,
   CAST(SUBSTR(string_field_0, 19, 6) AS FLOAT64) AS feb_value,
   CAST(SUBSTR(string_field_0, 26, 6) AS FLOAT64) AS mar_value,
   CAST(SUBSTR(string_field_0, 33, 6) AS FLOAT64) AS apr_value,
@@ -32,4 +31,4 @@ SELECT
   CAST(SUBSTR(string_field_0, 82, 6) AS FLOAT64) AS nov_value,
   CAST(SUBSTR(string_field_0, 89, 6) AS FLOAT64) AS dec_value
 FROM
-  `msd8654-434.bfro.climdiv-pcpncy` ;
+  `bfro.climdiv-pcpncy`;
