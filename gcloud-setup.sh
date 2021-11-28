@@ -1,5 +1,5 @@
-export GOOGLE_CLOUD_PROJECT=msd8654-434-bfro-dev
-export GOOGLE_BILLING_ACCT=01278E-34A2F6-83795E
+export GOOGLE_CLOUD_PROJECT=<add project id>
+export GOOGLE_BILLING_ACCT=<add billing account>
 export GOOGLE_STORAGE_BUCKET=$GOOGLE_CLOUD_PROJECT_bfro_data
 gcloud info
 gcloud projects create $GOOGLE_CLOUD_PROJECT --labels=env=dev
