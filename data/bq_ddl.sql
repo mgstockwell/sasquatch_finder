@@ -5,7 +5,63 @@ SELECT
   #                             described in FILE 1.  Range of values is 01-48.
   SUBSTR(string_field_0, 1,2) AS state_code,
   #DIVISION-NUMBER     3-5      COUNTY FIPS - Range of values 001-999.
-  SUBSTR(string_field_0, 1,3) AS county_fips,
+  #Need Code translation see https://www.ncei.noaa.gov/pub/data/cirs/climdiv/county-readme.txt
+  #The state code in noaa not same as FIPS state code, why would they do that
+  CONCAT(
+    CASE SUBSTR(string_field_0, 1,2)
+      WHEN '01' THEN '01'
+      WHEN '50' THEN '02'
+      WHEN '02' THEN '04'
+      WHEN '03' THEN '05'
+      WHEN '04' THEN '06'
+      WHEN '05' THEN '08'
+      WHEN '06' THEN '09'
+      WHEN '007' THEN '10'
+      WHEN '08' THEN '12'
+      WHEN '09' THEN '13'
+      WHEN '10' THEN '16'
+      WHEN '11' THEN '17'
+      WHEN '12' THEN '18'
+      WHEN '13' THEN '19'
+      WHEN '14' THEN '20'
+      WHEN '15' THEN '21'
+      WHEN '16' THEN '22'
+      WHEN '17' THEN '23'
+      WHEN '18' THEN '24'
+      WHEN '19' THEN '25'
+      WHEN '20' THEN '26'
+      WHEN '21' THEN '27'
+      WHEN '22' THEN '28'
+      WHEN '23' THEN '29'
+      WHEN '24' THEN '30'
+      WHEN '25' THEN '31'
+      WHEN '26' THEN '32'
+      WHEN '27' THEN '33'
+      WHEN '28' THEN '34'
+      WHEN '29' THEN '35'
+      WHEN '30' THEN '36'
+      WHEN '31' THEN '37'
+      WHEN '32' THEN '38'
+      WHEN '33' THEN '39'
+      WHEN '34' THEN '40'
+      WHEN '35' THEN '41'
+      WHEN '36' THEN '42'
+      WHEN '37' THEN '44'
+      WHEN '38' THEN '45'
+      WHEN '39' THEN '46'
+      WHEN '40' THEN '47'
+      WHEN '41' THEN '48'
+      WHEN '42' THEN '49'
+      WHEN '43' THEN '50'
+      WHEN '44' THEN '51'
+      WHEN '45' THEN '53'
+      WHEN '46' THEN '54'
+      WHEN '47' THEN '55'
+      WHEN '48' THEN '56'
+    ELSE
+    '00'
+  END
+    , SUBSTR(string_field_0, 3,3) ) AS county_fips,
   #ELEMENT CODE        6-7      01 = Precipitation
   #                             02 = Average Temperature
   #                             27 = Maximum Temperature
@@ -32,7 +88,7 @@ SELECT
   CAST(SUBSTR(string_field_0, 82, 6) AS FLOAT64) AS nov_value,
   CAST(SUBSTR(string_field_0, 89, 6) AS FLOAT64) AS dec_value
 FROM
-  `bfro.climdiv-pcpncy`;
+  `bfro.climdiv-pcpncy`
   
 CREATE OR REPLACE EXTERNAL TABLE bfro.bfro_reports_geocoded_csv
 OPTIONS (
